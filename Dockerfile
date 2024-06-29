@@ -12,10 +12,17 @@ RUN pip3 install .
 
 RUN pip3 install .[scripts,analysis]
 
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN useradd -p $(openssl passwd -1 mCdmmsUlKhPX) -m ssh_user
- 
-ENTRYPOINT service ssh restart && bash
+RUN  useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ubuntu && \
+    echo 'ubuntu:mCdmmsUlKhPX' | chpasswd
+
+RUN mkdir /var/run/sshd && \
+    sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
+    echo "export VISIBLE=now" >> /etc/profile
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]
 
 # docker build -t lp-gen . 
 # docker run -it --rm lp-gen
