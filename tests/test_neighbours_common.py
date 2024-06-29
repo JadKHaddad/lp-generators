@@ -16,12 +16,12 @@ def rstate():
 
 @pytest.fixture
 def lhs():
-    return np.array([[1, 0, 1], [1, 1, 0]], dtype=np.float)
+    return np.array([[1, 0, 1], [1, 1, 0]], dtype=np.float64)
 
 
 @pytest.fixture
 def alpha():
-    return np.array([1, 1, 1, 1, 1], dtype=np.float)
+    return np.array([1, 1, 1, 1, 1], dtype=np.float64)
 
 
 @pytest.fixture
@@ -31,12 +31,12 @@ def beta():
 
 @pytest.fixture
 def lhs_empty():
-    return np.array([[0, 0, 0], [0, 0, 0]], dtype=np.float)
+    return np.array([[0, 0, 0], [0, 0, 0]], dtype=np.float64)
 
 
 @pytest.fixture
 def lhs_full():
-    return np.array([[1, 1, 1], [1, 1, 1]], dtype=np.float)
+    return np.array([[1, 1, 1], [1, 1, 1]], dtype=np.float64)
 
 
 def test_basis_exchange(beta, rstate):
@@ -136,7 +136,7 @@ def test_repeat_scale_lhs_entry(count):
 
 @pytest.mark.parametrize('count', range(1, 10))
 def test_repeat_remove_lhs_entry(count):
-    input_vec = np.array(np.random.random((100, 100)) > 0.5, dtype=np.float)
+    input_vec = np.array(np.random.random((100, 100)) > 0.5, dtype=np.float64)
     result_vec = np.copy(input_vec)
     neighbours._remove_lhs_entry(result_vec, np.random, count=count)
     assert np.sum(input_vec != 0) - np.sum(result_vec != 0) == count, RANDOM_MESSAGE
@@ -144,7 +144,7 @@ def test_repeat_remove_lhs_entry(count):
 
 @pytest.mark.parametrize('count', range(1, 10))
 def test_repeat_remove_lhs_entry(count):
-    input_vec = np.array(np.random.random((100, 100)) > 0.5, dtype=np.float)
+    input_vec = np.array(np.random.random((100, 100)) > 0.5, dtype=np.float64)
     result_vec = np.copy(input_vec)
     neighbours._add_lhs_entry(result_vec, np.random, 0, 1, count=count)
     assert np.sum(result_vec != 0) - np.sum(input_vec != 0) == count, RANDOM_MESSAGE

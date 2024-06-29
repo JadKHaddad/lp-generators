@@ -32,11 +32,11 @@ def generate_alpha(variables, constraints, frac_violations, beta_param,
         a=beta_param, b=beta_param, size=num_violations)
     # subtract fractional components from a base vector of integers
     primal_alpha_vector = np.ceil(random_state.lognormal(
-        mean=mean_primal, sigma=std_primal, size=variables)).astype(np.float)
+        mean=mean_primal, sigma=std_primal, size=variables)).astype(np.float64)
     primal_alpha_vector[ind_frac] = primal_alpha_vector[ind_frac] - frac_values
     # slack values
     dual_alpha_vector = random_state.lognormal(
         mean=mean_dual, sigma=std_dual,
-        size=constraints).astype(np.float)
+        size=constraints).astype(np.float64)
     alpha_vector = np.concatenate([primal_alpha_vector, dual_alpha_vector])
     return alpha_vector

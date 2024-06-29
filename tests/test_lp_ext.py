@@ -17,9 +17,9 @@ def matrices():
             [1,0,2,0,1],
             [0,1,0,1,0],
             [1,-1,0,1,0],
-            [0,0,-1,1,0]], dtype=np.float),
-        np.array([1, 2, 3, 4], dtype=np.float),
-        np.array([1, 2, 3, 4, 5], dtype=np.float))
+            [0,0,-1,1,0]], dtype=np.float64),
+        np.array([1, 2, 3, 4], dtype=np.float64),
+        np.array([1, 2, 3, 4, 5], dtype=np.float64))
 
 
 @pytest.fixture
@@ -33,9 +33,9 @@ def model(matrices):
 def easy_model():
     model = LPCy()
     model.construct_dense_canonical(
-        2, 2, np.array([[1, 3], [3, 1]], dtype=np.float),
-        np.array([4, 4], dtype=np.float),
-        np.array([1, 1], dtype=np.float))
+        2, 2, np.array([[1, 3], [3, 1]], dtype=np.float64),
+        np.array([4, 4], dtype=np.float64),
+        np.array([1, 1], dtype=np.float64))
     return model
 
 

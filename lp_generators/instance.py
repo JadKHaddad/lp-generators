@@ -76,7 +76,7 @@ class Constructor(object):
         x = np.matrix(solution.x).transpose()
         s = np.matrix(solution.s).transpose()
         _rhs = A * x + s
-        return np.asarray(_rhs.transpose(), dtype=np.float)[0]
+        return np.asarray(_rhs.transpose(), dtype=np.float64)[0]
 
     def objective(self):
         solution = self.solution()
@@ -84,7 +84,7 @@ class Constructor(object):
         y = np.matrix(solution.y).transpose()
         r = np.matrix(solution.r).transpose()
         _obj = A.transpose() * y - r
-        return np.asarray(_obj.transpose(), dtype=np.float)[0]
+        return np.asarray(_obj.transpose(), dtype=np.float64)[0]
 
 
 class SolutionEncoder(object):
@@ -107,7 +107,7 @@ class DenseLHS(object):
 
     def __init__(self, lhs, **kwargs):
         super().__init__(**kwargs)
-        self._lhs_matrix = np.matrix(lhs, dtype=np.float)
+        self._lhs_matrix = np.matrix(lhs, dtype=np.float64)
 
     @property
     def variables(self):
@@ -132,8 +132,8 @@ class EncodedInstance(Constructor, DenseLHS, LPInstance):
         assert beta.shape == (n + m, )
         assert np.sum(beta == 1) == m
         assert np.sum(beta == 0) == n
-        self._alpha = np.array(alpha, dtype=np.float)
-        self._beta = np.array(beta, dtype=np.float)
+        self._alpha = np.array(alpha, dtype=np.float64)
+        self._beta = np.array(beta, dtype=np.float64)
 
     def alpha(self):
         return self._alpha
