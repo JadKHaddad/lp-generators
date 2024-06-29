@@ -1,0 +1,9 @@
+services:
+  lp_gen:
+    container_name: lp_gen
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 9999:22
+    restart: unless-stopped
