@@ -13,7 +13,7 @@ RUN pip3 install .
 RUN pip3 install .[scripts,analysis]
 
 # Create user and set password (even though password login will be disabled)
-RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ubuntu && \
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -u 1000 ubuntu && \
     echo 'ubuntu:mCdmmsUlKhPX' | chpasswd
 
 RUN mkdir /var/run/sshd && \
