@@ -12,13 +12,28 @@ RUN pip3 install .
 
 RUN pip3 install .[scripts,analysis]
 
-RUN  useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ubuntu && \
+# Create user and set password (even though password login will be disabled)
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ubuntu && \
     echo 'ubuntu:mCdmmsUlKhPX' | chpasswd
 
 RUN mkdir /var/run/sshd && \
-    sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
     echo "export VISIBLE=now" >> /etc/profile
+
+RUN mkdir -p /home/ubuntu/.ssh && \
+    chown -R ubuntu /home/ubuntu/.ssh && \
+    chmod 700 /home/ubuntu/.ssh
+
+COPY id_rsa.pub /home/ubuntu/.ssh/authorized_keys
+
+RUN chown ubuntu /home/ubuntu/.ssh/authorized_keys && \
+    chmod 600 /home/ubuntu/.ssh/authorized_keys
+
+RUN mkdir -p /home/ubuntu/scripts && \
+    chown -R ubuntu /home/ubuntu/scripts && \
+    chmod 700 /home/ubuntu/scripts
 
 EXPOSE 22
 
