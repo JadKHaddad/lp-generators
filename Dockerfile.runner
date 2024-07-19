@@ -1,0 +1,16 @@
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install -y openssh-server pkg-config zlib1g-dev libbz2-dev coinor-clp coinor-libclp-dev coinor-libosi-dev python3 python3-pip python3-venv
+
+WORKDIR /home/app
+
+COPY . .
+
+RUN pip3 install -r build-requirements.txt
+
+RUN pip3 install .
+
+RUN pip3 install .[scripts,analysis]
+
+# docker build -t lp-gen-runner -f Dockerfile.runner . 
+# docker run -it --rm lp-gen-runner

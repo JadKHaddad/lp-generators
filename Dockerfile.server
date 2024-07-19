@@ -37,5 +37,5 @@ EXPOSE 22
 
 CMD ["/usr/sbin/sshd", "-D"]
 
-# docker build -t lp-gen . 
-# docker run -it --rm lp-gen
+# docker build -t lp-gen-server -f Dockerfile.server . 
+# docker run -it --rm lp-gen-server
